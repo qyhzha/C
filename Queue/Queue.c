@@ -2,7 +2,7 @@
  * @Author: yonghang.qin
  * @Date: 2021-08-28 10:49:49
  * @LastEditors: yonghang.qin
- * @LastEditTime: 2021-08-28 18:14:15
+ * @LastEditTime: 2021-08-29 22:53:35
  * @Description:
  */
 #include <stdlib.h>
@@ -70,82 +70,57 @@ int QueueLength(Queue *queue)
 
 bool QueueEnqueue(Queue *queue, DataType data)
 {
-
-}
-
-bool QueueDequeue(Queue *queue, DataType *data);
-bool QueueFront(Queue *queue, DataType *data);
-
-DynamicQueue *DynamicQueueCreate(void)//O(1)
-{
-    DynamicQueue *ret = MALLOC(DynamicQueue, 1);
-
-    if (ret != NULL)
+    if (queue == NULL)
     {
-        ret->list = LinkListCreate(); //O(1)
-
-        if (ret->list != NULL)
-        {
-            ret->len = 0;
-        }
-        else
-        {
-            free(ret);
-            ret = NULL;
-        }
+        return false;
     }
 
-    return ret;
-}
-
-DynamicQueue *DynamicQueueDestroy(DynamicQueue *queue)				//O(n)
-{
-    if (queue != NULL)
+    Node *node = (Node *)malloc(sizeof(Node));
+    if (node == NULL)
     {
-        LinkListDestroy(queue->list);	//O(n)
-        free(queue);
+        return false;
     }
 
-    return NULL;
+    node->m_data = data;
+
+    add(queue->m_pre, (Node *)queue, node);
+
+    queue->m_length++;
+
+    return true;
 }
 
-int DynamicQueueLength(DynamicQueue *queue)							//O(1)
+bool QueueDequeue(Queue *queue, DataType *data)
 {
-    return (queue != NULL) ? queue->len : -1;
-}
-
-Bool DynamicQueueEnqueue(DynamicQueue *queue, DataType data)		//O(n)
-{
-    Bool ret = (queue != NULL);
-
-    if (ret)
+    if (QueueLength(queue) < 1)
     {
-        ret = LinkListInsert(queue->list, queue->len, data);//O(n)
-        if (ret) queue->len++;
+        return false;
     }
 
-    return ret;
-}
+    Node *node = queue->m_next;
 
-Bool DynamicQueueDequeue(DynamicQueue *queue, DataType *data)		//O(1)
-{
-    Bool ret = (queue != NULL);
-
-    if (ret)
+    if (data != NULL)
     {
-        ret = LinkListDelete(queue->list, 0, data);	//O(1)
-        if (ret) queue->len--;
-    }
-}
-
-Bool DynamicQueueFront(DynamicQueue *queue, DataType *data)			//(1)
-{
-    Bool ret = (queue != NULL) && (data != NULL);
-
-    if (ret)
-    {
-        ret = LinkListGet(queue->list, 0, data);
+        *data = node->m_data;
     }
 
-    return ret;
+    delete(node->m_pre, node->m_next);
+
+    queue->m_length--;
+
+    free(node);
+
+    return true;
+}
+
+bool QueueFront(Queue *queue, DataType *data)
+{
+    if (QueueLength(queue) < 1 || data == NULL)
+    {
+        return false;
+    }
+
+    *data = queue->m_next->m_data;
+
+    return true;
 }
