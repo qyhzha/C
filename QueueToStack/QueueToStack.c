@@ -53,12 +53,7 @@ int StackLength(Stack *stack) //O(1)
 
 bool StackPush(Stack *stack, DataType data) //O(n)
 {
-    if (stack == NULL)
-    {
-        return false;
-    }
-
-    return QueueEnqueue(stack->queue1, data) && stack->m_length++;
+    return (stack != NULL) && QueueEnqueue(stack->queue1, data) && stack->m_length++;
 }
 
 bool StackPop(Stack *stack, DataType *data) //O(n)
