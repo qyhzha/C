@@ -2,7 +2,7 @@
  * @Author: yonghang.qin
  * @Date: 2021-08-28 10:49:49
  * @LastEditors: yonghang.qin
- * @LastEditTime: 2021-08-28 17:06:25
+ * @LastEditTime: 2021-08-29 23:37:04
  * @Description:
  */
 #ifndef __QUEUE_H_
@@ -14,7 +14,7 @@ typedef int DataType;
 
 typedef struct Queue Queue;
 
-Queue* QueueCreate(void);
+Queue *QueueCreate(void);
 void QueueDestroy(Queue *queue);
 int QueueLength(Queue *queue);
 bool QueueEnqueue(Queue *queue, DataType data);

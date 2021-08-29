@@ -2,7 +2,7 @@
  * @Author: yonghang.qin
  * @Date: 2021-08-28 10:49:49
  * @LastEditors: yonghang.qin
- * @LastEditTime: 2021-08-29 23:09:13
+ * @LastEditTime: 2021-08-29 23:24:41
  * @Description:
  */
 #ifndef __STACK_H_
@@ -14,7 +14,7 @@ typedef int DataType;
 
 typedef struct Stack Stack;
 
-Stack* StackCreate(void);
+Stack *StackCreate(void);
 void StackDestroy(Stack *stack);
 int StackLength(Stack *stack);
 bool StackPush(Stack *stack, DataType data);
